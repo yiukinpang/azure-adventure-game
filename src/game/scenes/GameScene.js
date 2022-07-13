@@ -343,6 +343,7 @@ export default class GameScene extends Scene {
         const { game } = this.sys;
         const isDebugMode = this.physics.config.debug;
         const { heroStatus, mapKey, servicePrincipal } = this.initData;
+        this.data.set('servicePrincipal', servicePrincipal);
 
         const {
             position: initialPosition,
@@ -529,9 +530,11 @@ export default class GameScene extends Scene {
 
                             if (Input.Keyboard.JustDown(this.enterKey)) {
                                 const characterName = value;
+                                const servicePrincipal = this.data.values.servicePrincipal;
                                 const customEvent = new CustomEvent('new-dialog', {
                                     detail: {
-                                        characterName
+                                        characterName,
+                                        servicePrincipal
                                     },
                                 });
 
@@ -716,6 +719,7 @@ export default class GameScene extends Scene {
                                             haveSword: this.heroSprite.haveSword,
                                         },
                                         mapKey: teleportToMapKey,
+                                        servicePrincipal
                                     });
                                 }
                             );
@@ -784,9 +788,11 @@ export default class GameScene extends Scene {
             }
 
             if (item.itemType === 'sword') {
+                const servicePrincipal = this.data.values.servicePrincipal;
                 const customEvent = new CustomEvent('new-dialog', {
                     detail: {
                         characterName: item.itemType,
+                        servicePrincipal
                     },
                 });
                 window.dispatchEvent(customEvent);
@@ -812,9 +818,11 @@ export default class GameScene extends Scene {
             }
 
             if (item.itemType === 'push') {
+                const servicePrincipal = this.data.values.servicePrincipal;
                 const customEvent = new CustomEvent('new-dialog', {
                     detail: {
                         characterName: item.itemType,
+                        servicePrincipal
                     },
                 });
                 window.dispatchEvent(customEvent);
@@ -1196,9 +1204,12 @@ export default class GameScene extends Scene {
                 }
 
                 const characterName = npc.texture.key;
+                
+                const servicePrincipal = this.data.values.servicePrincipal;
                 const customEvent = new CustomEvent('new-dialog', {
                     detail: {
                         characterName,
+                        servicePrincipal
                     },
                 });
 
