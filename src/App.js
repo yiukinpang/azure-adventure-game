@@ -176,6 +176,8 @@ function App() {
   useEffect(() => {
     const dialogBoxEventListener = ({ detail }) => {
       // TODO fallback
+      
+      console.log(detail.servicePrincipal);
       setCharacterName(detail.characterName);
       setMessages(
           dialogs[detail.characterName]

@@ -7,7 +7,8 @@ import {
     ENEMY_AI_TYPE,
     NPC_MOVEMENT_RANDOM,
     SCENE_FADE_TIME,
-} from '../constants';
+}
+from '../constants';
 
 export default class GameScene extends Scene {
     constructor() {
@@ -287,7 +288,8 @@ export default class GameScene extends Scene {
                 item.itemType = 'heart';
                 this.itemsSprites.add(item);
                 item.anims.play('heart_idle');
-            } else if (itemType === 2) {
+            }
+            else if (itemType === 2) {
                 const item = this.physics.add
                     .sprite(position.x, position.y, 'coin')
                     .setDepth(1)
@@ -307,31 +309,31 @@ export default class GameScene extends Scene {
             case 'up':
                 return {
                     x: position.x * 16,
-                    y: (position.y - 2) * 16,
+                        y: (position.y - 2) * 16,
                 };
 
             case 'right':
                 return {
                     x: (position.x + 2) * 16,
-                    y: position.y * 16,
+                        y: position.y * 16,
                 };
 
             case 'down':
                 return {
                     x: position.x * 16,
-                    y: (position.y + 2) * 16,
+                        y: (position.y + 2) * 16,
                 };
 
             case 'left':
                 return {
                     x: (position.x - 2) * 16,
-                    y: position.y * 16,
+                        y: position.y * 16,
                 };
 
             default:
                 return {
                     x: position.x * 16,
-                    y: position.y * 16,
+                        y: position.y * 16,
                 };
         }
     }
@@ -340,7 +342,8 @@ export default class GameScene extends Scene {
         const camera = this.cameras.main;
         const { game } = this.sys;
         const isDebugMode = this.physics.config.debug;
-        const { heroStatus, mapKey } = this.initData;
+        const { heroStatus, mapKey, servicePrincipal } = this.initData;
+
         const {
             position: initialPosition,
             frame: initialFrame,
@@ -417,7 +420,8 @@ export default class GameScene extends Scene {
                                 this.scene.start('GameOverScene');
                             }
                         );
-                    } else {
+                    }
+                    else {
                         this.updateHeroHealthUi(this.calculateHeroHealthStates());
                         this.tweens.add({
                             targets: this.heroSprite,
@@ -449,8 +453,7 @@ export default class GameScene extends Scene {
             320, // TODO
             320, // TODO
             'presence',
-            isDebugMode,
-            { x: 0.5, y: 0.5 }
+            isDebugMode, { x: 0.5, y: 0.5 }
         );
         this.heroObjectCollider = createInteractiveGameObject(
             this,
@@ -459,8 +462,7 @@ export default class GameScene extends Scene {
             24,
             24,
             'object',
-            isDebugMode,
-            { x: 0.5, y: 0.5 }
+            isDebugMode, { x: 0.5, y: 0.5 }
         );
 
         // Items
@@ -529,7 +531,7 @@ export default class GameScene extends Scene {
                                 const characterName = value;
                                 const customEvent = new CustomEvent('new-dialog', {
                                     detail: {
-                                        characterName,
+                                        characterName
                                     },
                                 });
 
@@ -752,14 +754,12 @@ export default class GameScene extends Scene {
         }
 
         const gridEngineConfig = {
-            characters: [
-                {
-                    id: 'hero',
-                    sprite: this.heroSprite,
-                    startPosition: initialPosition,
-                    offsetY: 4,
-                },
-            ],
+            characters: [{
+                id: 'hero',
+                sprite: this.heroSprite,
+                startPosition: initialPosition,
+                offsetY: 4,
+            }, ],
         };
 
         this.physics.add.overlap(this.heroSprite, this.itemsSprites, (objA, objB) => {
@@ -870,7 +870,8 @@ export default class GameScene extends Scene {
                         });
                         this.gridEngine.setPosition(enemy.name, { x: 1, y: 1 });
                         enemy.destroy();
-                    } else {
+                    }
+                    else {
                         this.tweens.add({
                             targets: enemy,
                             alpha: 0,
@@ -1039,15 +1040,15 @@ export default class GameScene extends Scene {
                     const heroBackPosition = this.getBackPosition(facingDirection, heroPosition);
 
                     if (
-                        enemy.lastKnowHeroPosition.x !== heroBackPosition.x
-                        || enemy.lastKnowHeroPosition.y !== heroBackPosition.y
+                        enemy.lastKnowHeroPosition.x !== heroBackPosition.x ||
+                        enemy.lastKnowHeroPosition.y !== heroBackPosition.y
                     ) {
                         const enemyPosition = this.gridEngine.getPosition(enemy.name);
                         enemy.lastKnowHeroPosition = heroBackPosition;
 
                         if (
-                            heroBackPosition.x === enemyPosition.x
-                            && heroBackPosition.y === enemyPosition.y
+                            heroBackPosition.x === enemyPosition.x &&
+                            heroBackPosition.y === enemyPosition.y
                         ) {
                             enemy.updateFollowHeroPosition = false;
                             // TODO can attack I guess
@@ -1074,7 +1075,8 @@ export default class GameScene extends Scene {
         this.gridEngine.movementStarted().subscribe(({ charId, direction }) => {
             if (charId === 'hero') {
                 this.heroSprite.anims.play(`hero_walking_${direction}`);
-            } else {
+            }
+            else {
                 const npc = npcSprites.getChildren().find((npcSprite) => npcSprite.texture.key === charId);
                 if (npc) {
                     npc.anims.play(`${charId}_walking_${direction}`);
@@ -1092,7 +1094,8 @@ export default class GameScene extends Scene {
             if (charId === 'hero') {
                 this.heroSprite.anims.stop();
                 this.heroSprite.setFrame(this.getStopFrame(direction, charId));
-            } else {
+            }
+            else {
                 const npc = npcSprites.getChildren().find((npcSprite) => npcSprite.texture.key === charId);
                 if (npc) {
                     npc.anims.stop();
@@ -1110,7 +1113,8 @@ export default class GameScene extends Scene {
         this.gridEngine.directionChanged().subscribe(({ charId, direction }) => {
             if (charId === 'hero') {
                 this.heroSprite.setFrame(this.getStopFrame(direction, charId));
-            } else {
+            }
+            else {
                 const npc = npcSprites.getChildren().find((npcSprite) => npcSprite.texture.key === charId);
                 if (npc) {
                     npc.setFrame(this.getStopFrame(direction, charId));
@@ -1317,17 +1321,17 @@ export default class GameScene extends Scene {
         this.isSpaceJustDown = Input.Keyboard.JustDown(this.spaceKey);
 
         if (
-            this.isTeleporting
-            || this.isAttacking
-            || this.isShowingDialog
+            this.isTeleporting ||
+            this.isAttacking ||
+            this.isShowingDialog
         ) {
             return;
         }
 
         if (
-            !this.gridEngine.isMoving('hero')
-            && this.isSpaceJustDown
-            && this.heroSprite.haveSword
+            !this.gridEngine.isMoving('hero') &&
+            this.isSpaceJustDown &&
+            this.heroSprite.haveSword
         ) {
             const facingDirection = this.gridEngine.getFacingDirection('hero');
             this.heroSprite.anims.play(`hero_attack_${facingDirection}`);
@@ -1347,11 +1351,14 @@ export default class GameScene extends Scene {
         this.heroActionCollider.update();
         if (this.cursors.left.isDown || this.wasd.left.isDown) {
             this.gridEngine.move('hero', 'left');
-        } else if (this.cursors.right.isDown || this.wasd.right.isDown) {
+        }
+        else if (this.cursors.right.isDown || this.wasd.right.isDown) {
             this.gridEngine.move('hero', 'right');
-        } else if (this.cursors.up.isDown || this.wasd.up.isDown) {
+        }
+        else if (this.cursors.up.isDown || this.wasd.up.isDown) {
             this.gridEngine.move('hero', 'up');
-        } else if (this.cursors.down.isDown || this.wasd.down.isDown) {
+        }
+        else if (this.cursors.down.isDown || this.wasd.down.isDown) {
             this.gridEngine.move('hero', 'down');
         }
     }

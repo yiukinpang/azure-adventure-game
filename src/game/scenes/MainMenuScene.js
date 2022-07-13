@@ -33,6 +33,14 @@ export default class MainMenuScene extends Scene {
         const gameMenuSelectedEventListener = ({ detail }) => {
             switch (detail.selectedItem) {
                 case 'start': {
+                    let servicePrincipal = prompt("Please input your Azure Service Principal json:", "");
+                    try {
+                        servicePrincipal = JSON.parse(servicePrincipal);
+                    }
+                    catch (e) {
+                        window.location.reload();
+                        break;
+                    }
                     this.scene.start('GameScene', {
                         heroStatus: {
                             position: { x: 4, y: 3 },
@@ -46,6 +54,7 @@ export default class MainMenuScene extends Scene {
                             haveSword: false,
                         },
                         mapKey: 'home_page_city_house_01',
+                        servicePrincipal
                     });
                     break;
                 }
