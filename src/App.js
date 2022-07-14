@@ -15,7 +15,7 @@ import HeroCoin from "./game/HeroCoin";
 import HeroHealth from "./game/HeroHealth";
 import './App.css';
 import { calculateGameSize } from "./game/utils";
-import { dialogs, tasks } from "./game/tasks";
+import { dialogs, tasks, gradingEngineBaseUrl } from "./game/tasks";
 
 const { width, height, multiplier } = calculateGameSize();
 
@@ -166,12 +166,12 @@ function App() {
       const task = tasks[taskNumber];
 
       setTimeout(() => {
-        const url = "https://gradingengineassignmentfunctionapp.azurewebsites.net/api/AzureGraderFunction";
+        
         let formData = new FormData();
         formData.append('credentials', JSON.stringify(detail.servicePrincipal));
         formData.append('filter', task.filter);
 
-        fetch(url, {
+        fetch(gradingEngineBaseUrl, {
           method: 'POST',
           body: formData
         }).then((res) => res.json()).then(

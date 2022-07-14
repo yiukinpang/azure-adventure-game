@@ -6,6 +6,33 @@ Students have to finish task to create or configure Azure resources and wins the
 [![Azure Adventure Demo](http://img.youtube.com/vi/nfor8kO01_4/0.jpg)](http://www.youtube.com/watch?v=nfor8kO01_4 "Azure Adventure Demo")
 
 
+You need to create the service principal of reader role for 1 subscription.
+```
+az ad sp create-for-rbac --role="Reader" --scopes="/subscriptions/<Your Subscription ID>"
+```
+
+To change the grading engine and tasks, modify the ```src/game/tasks.js ```.
+
+
+## Setup
+```
+git clone https://github.com/wongcyrus/azure-adventure-game
+cd azure-adventure-game
+npm i
+```
+
+## Run test server
+```
+npm run start
+```
+
+## Build the production code
+```
+npm run build
+```
+And, you can deploy the reactjs website to Azure Blob Storage Static Website.
+
+
 ## Phaser 3 + React 17 Top-Down game demo
 
 There is a better version of this project here: https://github.com/blopa/top-down-react-phaser-game-template

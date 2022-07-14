@@ -1,3 +1,4 @@
+export const gradingEngineBaseUrl = "https://gradingengineassignmentfunctionapp.azurewebsites.net/api/AzureGraderFunction";
 export const dialogs = {
     "npc_01": [{
         "message": "Hello",
@@ -9,8 +10,6 @@ export const dialogs = {
     }],
     "npc_03": [{
         "message": "Hi",
-    }, {
-        "message": "Ok bye!",
     }],
     "npc_04": [{
         "message": "Hey",
