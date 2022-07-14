@@ -30,6 +30,9 @@ export const dialogs = {
 };
 
 export const tasks = [
-    { "instruction": "Can you help create a resource group named 'projProd' in Hong Kong? [Task 1]", "filter": "test==AzureProjectTest.ResourceGroupTest", "time": 1, "coin": 10 },
-    { "instruction": "Can you help create a resource group named 'projProd' in Hong Kong? [Task 2]", "filter": "test==AzureProjectTest.ResourceGroupTest", "time": 1, "coin": 10 },
+    { "instruction": "Can you help create a resource group named 'projProd' in Hong Kong?", "filter": "test==AzureProjectTest.ResourceGroupTest", "time": 2, "coin": 10 },
+    { "instruction": "Can you help create a Storage account in resource group 'projProd' and add tag name 'usage' and value 'logic'?", "filter": "test==AzureProjectTest.StorageAccountTest.Test01_StorageAccountsWithTag", "time": 2, "coin": 10 },
+    { "instruction": "Can you help create a Storage account in resource group 'projProd' and add tag name 'usage' and value 'StaticWeb'?", "filter": "test==AzureProjectTest.StorageAccountTest.Test02_StorageAccountsWithTag", "time": 2, "coin": 10 },
+    { "instruction": "Can you help change your Storage account tagged 'usage' as 'logic' to southeastasia, AccessTier to Hot, StorageV2, Standard_LRS and allow public access?", "filter": "test==AzureProjectTest.StorageAccountTest.Test03_StorageAccountSettings", "time": 2, "coin": 20 },
+    { "instruction": "Can you help change your Storage account tagged 'StaticWeb' as 'logic' to eastasia, AccessTier to Hot, StorageV2, Standard_LRS and allow public access? It should have Blob container called '$web'. Index page with content 'This is index page.' and error page with content 'This is error page.'", "filter": "test==AzureProjectTest.StorageAccountTest.Test04_WebStorageAccountSettings", "time": 2, "coin": 20 },
 ];

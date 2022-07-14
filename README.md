@@ -1,3 +1,11 @@
+# Azure Adventure
+A game on top of [Azure Automatic Grading Engine](https://techcommunity.microsoft.com/t5/educator-developer-blog/microsoft-azure-automatic-grading-engine-oct-2021-update/ba-p/2849141) project.
+
+Students have to finish task to create or configure Azure resources and wins the coins.
+
+[![Azure Adventure Demo](http://img.youtube.com/vi/nfor8kO01_4/0.jpg)](http://www.youtube.com/watch?v=nfor8kO01_4 "Azure Adventure Demo")
+
+
 ## Phaser 3 + React 17 Top-Down game demo
 
 There is a better version of this project here: https://github.com/blopa/top-down-react-phaser-game-template
@@ -10,7 +18,7 @@ Read moe about this project:
 
 ## Special thanks
 This game would not be possible without the help of some amazing people and their work, so here is my list of special thanks.
-
+- [Pablo Benmaman](https://pablo.gg/en/blog/coding/how-to-create-a-top-down-rpg-maker-like-game-with-phaser-js-and-react/) for the project.
 - [photonstorm](https://github.com/photonstorm), for creating [Phaser.io](https://github.com/photonstorm/phaser).
 - [Annoraaq](https://github.com/Annoraaq), for creating the [grid-engine](https://github.com/Annoraaq/grid-engine) plugin.
 - [ArMM1998](https://itch.io/profile/armm1998), for the [characters sprites and tilesets](https://opengameart.org/content/zelda-like-tilesets-and-sprites).

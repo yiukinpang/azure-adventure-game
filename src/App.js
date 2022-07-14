@@ -145,9 +145,16 @@ function App() {
   useEffect(() => {
     const dialogBoxEventListener = ({ detail }) => {
       // TODO fallback
+      if (!detail.characterName.startsWith("npc_")) {
+        setCharacterName(detail.characterName);
+        setMessages(
+          dialogs[detail.characterName]
+        );
+        return;
+      }
       const heroSprite = detail.heroSprite;
       let taskMessages = [...dialogs[detail.characterName]];
-      
+
       if (taskNumber >= tasks.length) {
         taskMessages.push({ "message": "Sorry we don't have any task for you!" });
         setCharacterName(detail.characterName);
@@ -172,7 +179,7 @@ function App() {
             for (let key in data) {
               console.log(key + "->" + data[key]);
               if (data[key] !== 1) {
-                console.log("Incorret!");
+                console.log("failed!");
                 return;
               }
             }
@@ -185,7 +192,7 @@ function App() {
         );
       }, task.time * 1000 * 5);
 
-      taskMessages.push({ "message": task.instruction + `(You have ${task.time} minues and you can get ${task.coin} coins!)` });
+      taskMessages.push({ "message": `Task ${taskNumber}: ` + task.instruction + `(You have ${task.time} minues and you can get ${task.coin} coins!)` });
 
       setCharacterName(detail.characterName);
       setMessages(
