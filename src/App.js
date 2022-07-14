@@ -15,6 +15,7 @@ import HeroCoin from "./game/HeroCoin";
 import HeroHealth from "./game/HeroHealth";
 import './App.css';
 import { calculateGameSize } from "./game/utils";
+import { dialogs, tasks } from "./game/tasks";
 
 const { width, height, multiplier } = calculateGameSize();
 
@@ -73,37 +74,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const dialogs = {
-  "npc_01": [{
-    "message": "Hello",
-  }, {
-    "message": "How are you?",
-  }],
-  "npc_02": [{
-    "message": "Hello there",
-  }],
-  "npc_03": [{
-    "message": "Hi",
-  }, {
-    "message": "Ok bye!",
-  }],
-  "npc_04": [{
-    "message": "Hey",
-  }],
-  "sword": [{
-    "message": "You got a sword",
-  }],
-  "push": [{
-    "message": "You can push boxes now",
-  }],
-  "sign_01": [{
-    "message": "You can read this!",
-  }],
-  "book_01": [{
-    "message": "Welcome to the game!",
-  }]
-};
-
 function App() {
   const classes = useStyles();
   const [messages, setMessages] = useState([]);
@@ -159,13 +129,11 @@ function App() {
         default: 'arcade',
       },
       plugins: {
-        scene: [
-          {
-            key: 'gridEngine',
-            plugin: GridEngine,
-            mapping: 'gridEngine',
-          },
-        ],
+        scene: [{
+          key: 'gridEngine',
+          plugin: GridEngine,
+          mapping: 'gridEngine',
+        }, ],
       },
       backgroundColor: '#000000',
     });
@@ -173,14 +141,55 @@ function App() {
     // window.phaserGame = game;
   }, []);
 
+  let taskNumber = 0;
   useEffect(() => {
     const dialogBoxEventListener = ({ detail }) => {
       // TODO fallback
+      const heroSprite = detail.heroSprite;
+      let taskMessages = [...dialogs[detail.characterName]];
       
-      console.log(detail.servicePrincipal);
+      if (taskNumber >= tasks.length) {
+        taskMessages.push({ "message": "Sorry we don't have any task for you!" });
+        setCharacterName(detail.characterName);
+        setMessages(
+          taskMessages
+        );
+        return;
+      }
+      const task = tasks[taskNumber];
+
+      setTimeout(() => {
+        const url = "https://gradingengineassignmentfunctionapp.azurewebsites.net/api/AzureGraderFunction";
+        let formData = new FormData();
+        formData.append('credentials', JSON.stringify(detail.servicePrincipal));
+        formData.append('filter', task.filter);
+
+        fetch(url, {
+          method: 'POST',
+          body: formData
+        }).then((res) => res.json()).then(
+          (data) => {
+            for (let key in data) {
+              console.log(key + "->" + data[key]);
+              if (data[key] !== 1) {
+                console.log("Incorret!");
+                return;
+              }
+            }
+            heroSprite.collectCoin(task.coin);
+            taskNumber++;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }, task.time * 1000 * 5);
+
+      taskMessages.push({ "message": task.instruction + `(You have ${task.time} minues and you can get ${task.coin} coins!)` });
+
       setCharacterName(detail.characterName);
       setMessages(
-          dialogs[detail.characterName]
+        taskMessages
       );
     };
     window.addEventListener('new-dialog', dialogBoxEventListener);
@@ -210,7 +219,7 @@ function App() {
   }, [setCharacterName, setMessages]);
 
   return (
-      <div>
+    <div>
         <div className={classes.gameWrapper}>
           <div
               id="game-content"

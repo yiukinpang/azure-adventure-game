@@ -534,7 +534,8 @@ export default class GameScene extends Scene {
                                 const customEvent = new CustomEvent('new-dialog', {
                                     detail: {
                                         characterName,
-                                        servicePrincipal
+                                        servicePrincipal,
+                                        heroSprite: this.heroSprite,
                                     },
                                 });
 
@@ -792,7 +793,8 @@ export default class GameScene extends Scene {
                 const customEvent = new CustomEvent('new-dialog', {
                     detail: {
                         characterName: item.itemType,
-                        servicePrincipal
+                        servicePrincipal,
+                        heroSprite: this.heroSprite,
                     },
                 });
                 window.dispatchEvent(customEvent);
@@ -822,7 +824,8 @@ export default class GameScene extends Scene {
                 const customEvent = new CustomEvent('new-dialog', {
                     detail: {
                         characterName: item.itemType,
-                        servicePrincipal
+                        servicePrincipal,
+                        heroSprite: this.heroSprite,
                     },
                 });
                 window.dispatchEvent(customEvent);
@@ -1204,12 +1207,13 @@ export default class GameScene extends Scene {
                 }
 
                 const characterName = npc.texture.key;
-                
+
                 const servicePrincipal = this.data.values.servicePrincipal;
                 const customEvent = new CustomEvent('new-dialog', {
                     detail: {
                         characterName,
-                        servicePrincipal
+                        servicePrincipal,
+                        heroSprite: this.heroSprite,
                     },
                 });
 

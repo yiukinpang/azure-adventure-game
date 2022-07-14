@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         return {
             imageRendering: 'pixelated',
             fontFamily: '"Press Start 2P"',
-            textTransform: 'uppercase',
             backgroundColor: '#e2b27e',
             border: 'solid',
             borderImage: `url("${dialogBorderBox}") 6 / ${6 * multiplier}px ${6 * multiplier}px ${6 * multiplier}px ${6 * multiplier}px stretch`,
