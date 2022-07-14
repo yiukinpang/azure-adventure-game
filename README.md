@@ -30,7 +30,40 @@ npm run start
 ```
 npm run build
 ```
-And, you can deploy the reactjs website to Azure Blob Storage Static Website.
+
+And, you can deploy the reactjs website to Azure Blob Storage Static Website or use Azure Static Web Apps
+
+## Deploy with Azure Static Web Apps
+
+https://docs.microsoft.com/en-us/azure/static-web-apps/get-started-cli?tabs=react 
+
+```
+az login
+
+az group create \
+  --name azure-adventure-game-group \
+  --location "eastasia"
+  
+GITHUB_USER_NAME=<YOUR_GITHUB_USER_NAME>
+  
+az staticwebapp create \
+    --name azure-adventure-game \
+    --resource-group azure-adventure-game-group \
+    --source https://github.com/$GITHUB_USER_NAME/azure-adventure-game \
+    --location "eastasia" \
+    --branch main \
+    --app-location "/"  \
+    --output-location "build"  \
+    --login-with-github
+
+az staticwebapp show \
+  --name azure-adventure-game \
+  --query "repositoryUrl"
+
+az staticwebapp show \
+  --name azure-adventure-game \
+  --query "defaultHostname"
+```
 
 
 ## Phaser 3 + React 17 Top-Down game demo
