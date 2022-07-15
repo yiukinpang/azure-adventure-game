@@ -166,7 +166,6 @@ function App() {
       const task = tasks[taskNumber];
 
       setTimeout(() => {
-        
         let formData = new FormData();
         formData.append('credentials', JSON.stringify(detail.servicePrincipal));
         formData.append('filter', task.filter);
@@ -183,16 +182,16 @@ function App() {
                 return;
               }
             }
-            heroSprite.collectCoin(task.coin);
+            heroSprite.collectCoin(task.reward);
             taskNumber++;
           },
           (error) => {
             console.log(error);
           }
         );
-      }, task.time * 1000 * 5);
+      }, task.timeLimit * 1000 * 60);
 
-      taskMessages.push({ "message": `Task ${taskNumber}: ` + task.instruction + `(You have ${task.time} minues and you can get ${task.coin} coins!)` });
+      taskMessages.push({ "message": `Task ${taskNumber}: ` + task.instruction + `(You have ${task.timeLimit} minues and you can get ${task.reward} coins!)` });
 
       setCharacterName(detail.characterName);
       setMessages(
