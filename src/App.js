@@ -142,9 +142,62 @@ function App() {
   }, []);
 
   let taskNumber = 0;
+
+  const checkTasks = (heroSprite, detail, task) => {
+    setTimeout(() => {
+      let formData = new FormData();
+      formData.append('credentials', JSON.stringify(detail.servicePrincipal));
+      formData.append('filter', task ? task.name : "");
+
+      fetch(gradingEngineBaseUrl, {
+        method: 'POST',
+        body: formData
+      }).then((res) => res.json()).then(
+        (data) => {
+          if (task) {
+            for (let key in data) {
+              console.log(key + "->" + data[key]);
+              if (data[key] !== 1) {
+                console.log("failed!");
+                return;
+              }
+            }
+            heroSprite.collectCoin(task.reward);
+            taskNumber++;
+          }
+          else {
+            for(let t of tasks){
+              console.log(t.tests.map(c=> data[c] === 1));
+              
+              const passAllRequiredTestsForATask = t.tests.map(c=> data[c] === 1).every(element => element === true);
+              if(passAllRequiredTestsForATask){
+                heroSprite.collectCoin(t.reward);
+                taskNumber++;
+              }else{
+                break;
+              }
+            }
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }, task ? task.timeLimit * 1000 * 60 : 1);
+  };
   useEffect(() => {
     const dialogBoxEventListener = ({ detail }) => {
       // TODO fallback
+      const heroSprite = detail.heroSprite;
+      if (detail.characterName === "book_01") {
+        setCharacterName(detail.characterName);
+        setMessages(
+          dialogs[detail.characterName]
+        );
+        checkTasks(heroSprite, detail);
+        return;
+      }
+
       if (!detail.characterName.startsWith("npc_")) {
         setCharacterName(detail.characterName);
         setMessages(
@@ -152,7 +205,6 @@ function App() {
         );
         return;
       }
-      const heroSprite = detail.heroSprite;
       let taskMessages = [...dialogs[detail.characterName]];
 
       if (taskNumber >= tasks.length) {
@@ -164,32 +216,7 @@ function App() {
         return;
       }
       const task = tasks[taskNumber];
-
-      setTimeout(() => {
-        let formData = new FormData();
-        formData.append('credentials', JSON.stringify(detail.servicePrincipal));
-        formData.append('filter', task.filter);
-
-        fetch(gradingEngineBaseUrl, {
-          method: 'POST',
-          body: formData
-        }).then((res) => res.json()).then(
-          (data) => {
-            for (let key in data) {
-              console.log(key + "->" + data[key]);
-              if (data[key] !== 1) {
-                console.log("failed!");
-                return;
-              }
-            }
-            heroSprite.collectCoin(task.reward);
-            taskNumber++;
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }, task.timeLimit * 1000 * 60);
+      checkTasks(heroSprite, detail, task);
 
       taskMessages.push({ "message": `Task ${taskNumber}: ` + task.instruction + `(You have ${task.timeLimit} minues and you can get ${task.reward} coins!)` });
 
