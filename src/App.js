@@ -142,6 +142,7 @@ function App() {
   }, []);
 
   let taskNumber = 0;
+  let reloadCoin = false;
 
   const checkTasks = (heroSprite, detail, task) => {
     setTimeout(() => {
@@ -167,16 +168,16 @@ function App() {
           }
           else {
             for(let t of tasks){
-              console.log(t.tests.map(c=> data[c] === 1));
-              
               const passAllRequiredTestsForATask = t.tests.map(c=> data[c] === 1).every(element => element === true);
               if(passAllRequiredTestsForATask){
+                console.log("Passed: "+t.name);
                 heroSprite.collectCoin(t.reward);
                 taskNumber++;
               }else{
                 break;
               }
             }
+            reloadCoin = false;
           }
         },
         (error) => {
@@ -194,11 +195,12 @@ function App() {
         setMessages(
           dialogs[detail.characterName]
         );
+        reloadCoin = true;
         checkTasks(heroSprite, detail);
         return;
       }
 
-      if (!detail.characterName.startsWith("npc_")) {
+      if (!detail.characterName.startsWith("npc_") || reloadCoin) {
         setCharacterName(detail.characterName);
         setMessages(
           dialogs[detail.characterName]
