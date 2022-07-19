@@ -24,7 +24,7 @@ export const dialogs = {
         "message": "You can read this!",
     }],
     "book_01": [{
-        "message": "Welcome to the game, and now I help you getting back your earned coins, but it takes sometimes!",
+        "message": "Welcome to the game, and now I help you getting back your earned coins before working on new tasks, but it takes sometimes!",
     }]
 };
 
