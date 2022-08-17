@@ -15,7 +15,7 @@ import HeroCoin from "./game/HeroCoin";
 import HeroHealth from "./game/HeroHealth";
 import './App.css';
 import { calculateGameSize } from "./game/utils";
-import { dialogs, tasks, gradingEngineBaseUrl } from "./game/tasks";
+import { dialogs, tasks, gradingEngineBaseUrl, apiKey } from "./game/tasks";
 
 const { width, height, multiplier } = calculateGameSize();
 
@@ -150,8 +150,13 @@ function App() {
       formData.append('credentials', JSON.stringify(detail.servicePrincipal));
       formData.append('filter', task ? task.name : "");
 
+      const headers =  {
+        'Ocp-Apim-Subscription-Key': apiKey
+      }
+
       fetch(gradingEngineBaseUrl, {
         method: 'POST',
+        headers,
         body: formData
       }).then((res) => res.json()).then(
         (data) => {
@@ -184,7 +189,7 @@ function App() {
           console.log(error);
         }
       );
-    }, task ? task.timeLimit * 1000 * 60 : 1);
+    }, task ? task.timeLimit * 1000 * 1 : 1);
   };
   useEffect(() => {
     const dialogBoxEventListener = ({ detail }) => {
