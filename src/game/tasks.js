@@ -98,12 +98,12 @@ export const tasks = [{
     },
     {
         "gameClassOrder": 5,
-        "name": "AzureProjectTest.AppServiceTest.Test07_AzureFunctionCallPutMessasgeToQueue",
+        "name": "AzureProjectTest.AppServiceTest.Test07_AzureFunctionCallPutMessageToQueue",
         "tests": [
-            "AzureProjectTest.AppServiceTest.Test07_AzureFunctionCallPutMessasgeToQueue"
+            "AzureProjectTest.AppServiceTest.Test07_AzureFunctionCallPutMessageToQueue"
         ],
         "instruction": "Update a node.js Azure function source code When receive a get request ?user=tester&message=abcd, then put message {'user':'tester','message': 'abcd','time':'<current time>'} into Azure Storage queue named 'job'.",
-        "filter": "test=AzureProjectTest.AppServiceTest.Test07_AzureFunctionCallPutMessasgeToQueue",
+        "filter": "test=AzureProjectTest.AppServiceTest.Test07_AzureFunctionCallPutMessageToQueue",
         "timeLimit": 10,
         "reward": 10
     },
@@ -115,7 +115,7 @@ export const tasks = [{
             "AzureProjectTest.AppServiceTest.Test02_FunctionAppsWithTag",
             "AzureProjectTest.AppServiceTest.Test03_AppServicePlanSettings"
         ],
-        "instruction": "Can you a Azure Function App v3 in Hong Kong for node.js 14? I want to use Windows in Consumption plan. Tag the AppServicePlan with {key:AppServicePlan}.Tag the FunctionApps with {key:FunctionApp}.",
+        "instruction": "Can you a Azure Function App v4 in Hong Kong for node.js 16? I want to use Windows in Consumption plan. Tag the AppServicePlan with {key:AppServicePlan}.Tag the FunctionApps with {key:FunctionApp}.",
         "filter": "test==\"AzureProjectTest.AppServiceTest.Test01_AppServicePlanWithTag\"||test==\"AzureProjectTest.AppServiceTest.Test02_FunctionAppsWithTag\"||test==\"AzureProjectTest.AppServiceTest.Test03_AppServicePlanSettings\"",
         "timeLimit": 10,
         "reward": 20
@@ -127,7 +127,7 @@ export const tasks = [{
             "AzureProjectTest.ResourceGroupTest.Test01_ResourceGroupExist",
             "AzureProjectTest.ResourceGroupTest.Test02_ResourceGroupLocation"
         ],
-        "instruction": "Can you create a resource group named 'projProd' in Hong Kong?",
+        "instruction": "Can you create a resource group named 'projProd' in Singapore?",
         "filter": "test==\"AzureProjectTest.ResourceGroupTest.Test01_ResourceGroupExist\"||test==\"AzureProjectTest.ResourceGroupTest.Test02_ResourceGroupLocation\"",
         "timeLimit": 2,
         "reward": 10
