@@ -1,5 +1,5 @@
-export const gradingEngineBaseUrl = "https://api-gradingengineassignment.azure-api.net/AzureGraderFunction";
-export const apiKey = "e87559ec67bd432fa6a75de80682d456";
+export const gradingEngineBaseUrl = "https://api-grading-engine-assignment.azure-api.net/AzureGraderFunction";
+export const apiKey = "ee8bac80fdf04c7f8463a3990faa05c7";
 export const dialogs = {
     "npc_01": [{
         "message": "Hello",
