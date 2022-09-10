@@ -326,7 +326,7 @@ export const tasks = [{
             "AzureProjectTest.VnetTests.Test01_Have2VnetsIn2Regions",
             "AzureProjectTest.VnetTests.Test02_VnetAddressSpace"
         ],
-        "instruction": "Can you create 2 vnets? First vnet named 'projVnet1Prod' in 'southeastasia' of CIDR '10.0.0.0/16' and Second vnet named 'projVnet2Prod' in 'southeastasia' of CIDR '10.1.0.0/16'.",
+        "instruction": "Can you create 2 vnets? First vnet named 'projVnet1Prod' in 'southeastasia' of CIDR '10.0.0.0/16' and Second vnet named 'projVnet2Prod' in 'eastasia' of CIDR '10.1.0.0/16'.",
         "filter": "test==\"AzureProjectTest.VnetTests.Test01_Have2VnetsIn2Regions\"||test==\"AzureProjectTest.VnetTests.Test02_VnetAddressSpace\"",
         "timeLimit": 2,
         "reward": 10
