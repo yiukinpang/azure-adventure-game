@@ -225,7 +225,7 @@ function App() {
       const task = tasks[taskNumber];
       checkTasks(heroSprite, detail, task);
 
-      taskMessages.push({ "message": `Task ${taskNumber}: ` + task.instruction + `(You have ${task.timeLimit} minues and you can get ${task.reward} coins!)` });
+      taskMessages.push({ "message": `Task ${taskNumber}: ` + task.instruction + `(You have ${task.timeLimit} minutes and you can get ${task.reward} coins!)` });
 
       setCharacterName(detail.characterName);
       setMessages(
