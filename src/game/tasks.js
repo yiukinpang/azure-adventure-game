@@ -37,7 +37,7 @@ export const tasks = [
       "AzureProjectTest.ResourceGroupTest.Test01_ResourceGroupExist",
       "AzureProjectTest.ResourceGroupTest.Test02_ResourceGroupLocation"
     ],
-    "instruction": "Can you create a resource group named 'projProd' in Singapore?",
+    "instruction": "Can you create a resource group named 'projProd' in Hong Kong?",
     "filter": "test==\"AzureProjectTest.ResourceGroupTest.Test01_ResourceGroupExist\"||test==\"AzureProjectTest.ResourceGroupTest.Test02_ResourceGroupLocation\"",
     "timeLimit": 2,
     "reward": 10
