@@ -190,7 +190,7 @@ function App() {
           console.log(error);
         }
       );
-    }, task ? task.timeLimit * 1000 * 1 : 1);
+    }, task ? task.timeLimit * 1000 * 60 : 1);
   };
   useEffect(() => {
     const dialogBoxEventListener = ({ detail }) => {
