@@ -1,4 +1,6 @@
 import { Scene } from 'phaser';
+import { gameTaskBaseUrl } from "../constants";
+
 
 export default class MainMenuScene extends Scene {
     constructor() {
@@ -33,9 +35,13 @@ export default class MainMenuScene extends Scene {
         const gameMenuSelectedEventListener = ({ detail }) => {
             switch (detail.selectedItem) {
                 case 'start': {
-                    let servicePrincipal = prompt("Please input your Azure Service Principal json:", "");
+                    let servicePrincipal = prompt("Please input your Azure Service Principal json and wait for a moment:", "");
                     try {
                         servicePrincipal = JSON.parse(servicePrincipal);
+                        var request = new XMLHttpRequest();
+                        request.open("GET", gameTaskBaseUrl, false);
+                        request.send(null);
+                        var tasks = JSON.parse(request.responseText);                       
                     }
                     catch (e) {
                         window.location.reload();
@@ -54,7 +60,8 @@ export default class MainMenuScene extends Scene {
                             haveSword: false,
                         },
                         mapKey: 'home_page_city_house_01',
-                        servicePrincipal
+                        servicePrincipal,
+                        tasks
                     });
                     break;
                 }
