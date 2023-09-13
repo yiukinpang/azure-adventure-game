@@ -15,7 +15,9 @@ import HeroCoin from "./game/HeroCoin";
 import HeroHealth from "./game/HeroHealth";
 import './App.css';
 import { calculateGameSize } from "./game/utils";
-import { dialogs, tasks, gradingEngineBaseUrl, apiKey } from "./game/tasks";
+import { dialogs } from "./game/tasks";
+import { gradingEngineBaseUrl } from "./game/constants";
+
 
 const { width, height, multiplier } = calculateGameSize();
 
@@ -133,7 +135,7 @@ function App() {
           key: 'gridEngine',
           plugin: GridEngine,
           mapping: 'gridEngine',
-        }, ],
+        },],
       },
       backgroundColor: '#000000',
     });
@@ -150,9 +152,8 @@ function App() {
       formData.append('credentials', JSON.stringify(detail.servicePrincipal));
       formData.append('filter', task ? task.name : "");
 
-      const headers =  {
-        'Ocp-Apim-Subscription-Key': apiKey
-      }
+      const tasks = detail.tasks;
+      const headers = {}
 
       fetch(gradingEngineBaseUrl, {
         method: 'POST',
@@ -172,13 +173,13 @@ function App() {
             taskNumber++;
           }
           else {
-            for(let t of tasks){
-              const passAllRequiredTestsForATask = t.tests.map(c=> data[c] === 1).every(element => element === true);
-              if(passAllRequiredTestsForATask){
-                console.log("Passed: "+t.name);
+            for (let t of tasks) {
+              const passAllRequiredTestsForATask = t.tests.map(c => data[c] === 1).every(element => element === true);
+              if (passAllRequiredTestsForATask) {
+                console.log("Passed: " + t.name);
                 heroSprite.collectCoin(t.reward);
                 taskNumber++;
-              }else{
+              } else {
                 break;
               }
             }
@@ -189,7 +190,7 @@ function App() {
           console.log(error);
         }
       );
-    }, task ? task.timeLimit * 1000 * 1 : 1);
+    }, task ? task.timeLimit * 1000 * 60 : 1);
   };
   useEffect(() => {
     const dialogBoxEventListener = ({ detail }) => {
@@ -214,6 +215,7 @@ function App() {
       }
       let taskMessages = [...dialogs[detail.characterName]];
 
+      const tasks = detail.tasks;
       if (taskNumber >= tasks.length) {
         taskMessages.push({ "message": "Sorry we don't have any task for you!" });
         setCharacterName(detail.characterName);
@@ -260,59 +262,59 @@ function App() {
 
   return (
     <div>
-        <div className={classes.gameWrapper}>
-          <div
-              id="game-content"
-              className={classes.gameContentWrapper}
-          >
-            {/* this is where the game canvas will be rendered */}
-          </div>
-          {heroHealthStates.length > 0 && (
-              <HeroHealth
-                  gameSize={{
-                    width,
-                    height,
-                    multiplier,
-                  }}
-                  healthStates={heroHealthStates}
-              />
-          )}
-          {heroCoins !== null && (
-              <HeroCoin
-                  gameSize={{
-                    width,
-                    height,
-                    multiplier,
-                  }}
-                  heroCoins={heroCoins}
-              />
-          )}
-          {messages.length > 0 && (
-              <DialogBox
-                  onDone={handleMessageIsDone}
-                  characterName={characterName}
-                  messages={messages}
-                  gameSize={{
-                    width,
-                    height,
-                    multiplier,
-                  }}
-              />
-          )}
-          {gameMenuItems.length > 0 && (
-              <GameMenu
-                  items={gameMenuItems}
-                  gameSize={{
-                    width,
-                    height,
-                    multiplier,
-                  }}
-                  position={gameMenuPosition}
-                  onSelected={handleMenuItemSelected}
-              />
-          )}
+      <div className={classes.gameWrapper}>
+        <div
+          id="game-content"
+          className={classes.gameContentWrapper}
+        >
+          {/* this is where the game canvas will be rendered */}
         </div>
+        {heroHealthStates.length > 0 && (
+          <HeroHealth
+            gameSize={{
+              width,
+              height,
+              multiplier,
+            }}
+            healthStates={heroHealthStates}
+          />
+        )}
+        {heroCoins !== null && (
+          <HeroCoin
+            gameSize={{
+              width,
+              height,
+              multiplier,
+            }}
+            heroCoins={heroCoins}
+          />
+        )}
+        {messages.length > 0 && (
+          <DialogBox
+            onDone={handleMessageIsDone}
+            characterName={characterName}
+            messages={messages}
+            gameSize={{
+              width,
+              height,
+              multiplier,
+            }}
+          />
+        )}
+        {gameMenuItems.length > 0 && (
+          <GameMenu
+            items={gameMenuItems}
+            gameSize={{
+              width,
+              height,
+              multiplier,
+            }}
+            position={gameMenuPosition}
+            onSelected={handleMenuItemSelected}
+          />
+        )}
       </div>
+    </div>
   );
 }
 

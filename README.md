@@ -11,8 +11,11 @@ You need to create the service principal of reader role for 1 subscription.
 az ad sp create-for-rbac --role="Reader" --scopes="/subscriptions/<Your Subscription ID>"
 ```
 
-To change the grading engine and tasks, modify the ```src/game/tasks.js ```.
-
+To change the gradingEngineBaseUrl and gameTaskBaseUrl, modify the ```src/game/constants.js ```.
+```
+export const gradingEngineBaseUrl = "https://xxx.azurewebsites.net/api/AzureGraderFunction";
+export const gameTaskBaseUrl = "https://xxx.azurewebsites.net/api/GameTaskFunction";
+```
 
 ## Setup
 ```
@@ -20,6 +23,19 @@ git clone https://github.com/wongcyrus/azure-adventure-game
 cd azure-adventure-game
 npm i
 ```
+
+## For Codespaces
+Install nvm and use node 16 https://github.com/nvm-sh/nvm
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+```
+Close terminal, and use a new terminal 
+```
+nvm install 16
+nvm use 16
+npm i 
+```
+
 
 ## Run test server
 ```
