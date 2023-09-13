@@ -22,7 +22,7 @@ export class GitHubConstruct extends Construct {
       vulnerabilityAlerts: true,
       template:
       {
-        repository: "AzureOpenAILive2DChatbotDemo",
+        repository: "azure-adventure-game",
         owner: "wongcyrus",
         includeAllBranches: true
       }
