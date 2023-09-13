@@ -31,13 +31,13 @@ class AzureAdventureGameStack extends TerraformStack {
       token: process.env.GITHUB_TOKEN,
     });
 
-    const repository = "AzureOpenAILive2DChatbotCICD";
+    const repository = "azure-adventure-game";
     let uniquePrefix = "ive2023";
     const region = "eastasia";
 
 
     let resourceGroup = new ResourceGroup(this, 'resourceGroup', {
-      name: uniquePrefix + `azure-openai-live2d-chatbot`,
+      name: uniquePrefix + `azure-adventure-game`,
       location: region,
     });
 
