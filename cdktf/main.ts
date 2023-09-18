@@ -12,7 +12,7 @@ import { StorageAccountConstruct } from "./components/storage-account";
 
 
 import * as dotenv from 'dotenv';
-dotenv.config({ path: __dirname + '/.env',override: true });
+dotenv.config({ path: __dirname + '/.env', override: true });
 
 class AzureAdventureGameStack extends TerraformStack {
   constructor(scope: Construct, id: string) {
@@ -39,7 +39,7 @@ class AzureAdventureGameStack extends TerraformStack {
 
 
     let resourceGroup = new ResourceGroup(this, 'resourceGroup', {
-      name: uniquePrefix + `azure-adventure-game`,
+      name: uniquePrefix + `-azure-adventure-game`,
       location: region,
     });
 
@@ -47,9 +47,9 @@ class AzureAdventureGameStack extends TerraformStack {
       uniquePrefix: uniquePrefix,
       resourceGroup: resourceGroup,
     });
-
-
+    
     const staticSiteConstruct = new StaticSiteConstruct(this, "staticSite", {
+      prefix: uniquePrefix,
       resourceGroup: resourceGroup,
       course: process.env.COURSE!,
       gameTaskFunctionUrl: process.env.GAME_TASK_FUNCTION_URL!,
@@ -59,7 +59,7 @@ class AzureAdventureGameStack extends TerraformStack {
     });
 
     new GitHubConstruct(this, "github", {
-      repository: uniquePrefix + repository,
+      repository: uniquePrefix + "-" + repository,
       clientID: staticSiteConstruct.application.id,
       clientSecret: staticSiteConstruct.applicationPassword.value,
       apiToken: staticSiteConstruct.staticSite.apiKey,
@@ -84,7 +84,7 @@ class AzureAdventureGameStack extends TerraformStack {
     new TerraformOutput(this, "AADB2C_PROVIDER_CLIENT_SECRET", {
       value: staticSiteConstruct.applicationPassword.value,
       sensitive: true
-    });   
+    });
   }
 }
 

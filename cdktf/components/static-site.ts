@@ -8,7 +8,8 @@ import { Application } from ".././.gen/providers/azuread/application";
 import { ApplicationPassword } from ".././.gen/providers/azuread/application-password";
 import { ResourceGroup } from ".././.gen/providers/azurerm/resource-group";
 
-export interface StaticSiteConstructProps {  
+export interface StaticSiteConstructProps {
+  prefix: string;
   gameTaskFunctionUrl: string;
   graderFunctionUrl: string;
   getApikeyUrl: string;
@@ -26,13 +27,13 @@ export class StaticSiteConstruct extends Construct {
     super(scope, id);
     this.staticSite = new StaticSite(this, "StaticSite", {
       location: props.resourceGroup.location,
-      name: "StaticSite",
+      name: props.prefix + "StaticSite",
       resourceGroupName: props.resourceGroup.name,
       skuTier: "Free",
     });
 
     const applicationInsights = new ApplicationInsights(this, "ApplicationInsights", {
-      name: "ApplicationInsights",
+      name: props.prefix +"ApplicationInsights",
       resourceGroupName: props.resourceGroup.name,
       location: props.resourceGroup.location,
       applicationType: "web",
@@ -45,7 +46,9 @@ export class StaticSiteConstruct extends Construct {
       body: `${Fn.jsonencode({
         "properties": {
           "APPINSIGHTS_INSTRUMENTATIONKEY": `${applicationInsights.instrumentationKey}`,
-          "APPLICATIONINSIGHTS_CONNECTION_STRING": `${applicationInsights.connectionString}`,    
+          "APPLICATIONINSIGHTS_CONNECTION_STRING": `${applicationInsights.connectionString}`,
+          "course": `${props.course}`,
+          "getApikeyUrl": `${props.getApikeyUrl}`,
           "gameTaskFunctionUrl": `${props.gameTaskFunctionUrl}`,
           "graderFunctionUrl": `${props.graderFunctionUrl}`,
           "storageAccountConnectionString": `${props.storageAccountConnectionString}`,
@@ -56,7 +59,7 @@ export class StaticSiteConstruct extends Construct {
 
 
     this.application = new Application(this, "Application", {
-      displayName: "Application",
+      displayName: props.prefix +"Application",
       signInAudience: "AzureADMyOrg",
       web: {
         redirectUris: ["https://" + this.staticSite.defaultHostName + "/.auth/login/aadb2c/callback"],
