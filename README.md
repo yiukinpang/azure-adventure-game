@@ -11,11 +11,6 @@ You need to create the service principal of reader role for 1 subscription.
 az ad sp create-for-rbac --role="Reader" --scopes="/subscriptions/<Your Subscription ID>"
 ```
 
-To change the gradingEngineBaseUrl and gameTaskBaseUrl, modify the ```src/game/constants.js ```.
-```
-export const gradingEngineBaseUrl = "https://xxx.azurewebsites.net/api/AzureGraderFunction";
-export const gameTaskBaseUrl = "https://xxx.azurewebsites.net/api/GameTaskFunction";
-```
 
 ## Setup
 ```
@@ -40,6 +35,10 @@ npm i
 ## Run test server
 ```
 npm run start
+```
+
+```
+swa start build --api-location api
 ```
 
 ## Build the production code

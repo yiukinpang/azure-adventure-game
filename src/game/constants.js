@@ -16,5 +16,5 @@ export const ENEMY_AI_TYPE = 'follow';
 // Save data
 export const SAVE_DATA_KEY = 'pablogg_game_data';
 
-export const gradingEngineBaseUrl = "https://gradingengineassignment1functionapp.azurewebsites.net/api/AzureGraderFunction";
-export const gameTaskBaseUrl = "https://gradingengineassignment1functionapp.azurewebsites.net/api/GameTaskFunction";
+export const gradingEngineBaseUrl = "/api/grader-task-function";
+export const gameTaskBaseUrl = "/api/azure-task-function";
