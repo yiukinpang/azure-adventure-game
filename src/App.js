@@ -148,8 +148,7 @@ function App() {
 
   const checkTasks = (heroSprite, detail, task) => {
     setTimeout(() => {
-      let formData = new FormData();
-      formData.append('credentials', JSON.stringify(detail.servicePrincipal));
+      let formData = new FormData();     
       formData.append('filter', task ? task.name : "");
 
       const tasks = detail.tasks;
@@ -174,7 +173,7 @@ function App() {
           }
           else {
             for (let t of tasks) {
-              const passAllRequiredTestsForATask = t.tests.map(c => data[c] === 1).every(element => element === true);
+              const passAllRequiredTestsForATask = t.tests.map(c => data[c] && data[c] === 1).every(element => element === true);
               if (passAllRequiredTestsForATask) {
                 console.log("Passed: " + t.name);
                 heroSprite.collectCoin(t.reward);

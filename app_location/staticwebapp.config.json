@@ -56,5 +56,9 @@
     },
     "platform": {
         "apiRuntime": "node:16"
+    },
+    "globalHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS"
     }
 }

@@ -34,14 +34,13 @@ export default class MainMenuScene extends Scene {
         window.dispatchEvent(customEvent);
         const gameMenuSelectedEventListener = ({ detail }) => {
             switch (detail.selectedItem) {
-                case 'start': {
-                    let servicePrincipal = prompt("Please input your Azure Service Principal json and wait for a moment:", "");
-                    try {
-                        servicePrincipal = JSON.parse(servicePrincipal);
-                        var request = new XMLHttpRequest();
+                case 'start': {                    
+                    try {                      
+                        let request = new XMLHttpRequest();
                         request.open("GET", gameTaskBaseUrl, false);
                         request.send(null);
-                        var tasks = JSON.parse(request.responseText);                       
+                        var tasks = JSON.parse(request.responseText);
+                        console.log(tasks);                       
                     }
                     catch (e) {
                         window.location.reload();
@@ -59,8 +58,7 @@ export default class MainMenuScene extends Scene {
                             canPush: false,
                             haveSword: false,
                         },
-                        mapKey: 'home_page_city_house_01',
-                        servicePrincipal,
+                        mapKey: 'home_page_city_house_01',                       
                         tasks
                     });
                     break;

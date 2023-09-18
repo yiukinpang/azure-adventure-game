@@ -342,8 +342,7 @@ export default class GameScene extends Scene {
         const camera = this.cameras.main;
         const { game } = this.sys;
         const isDebugMode = this.physics.config.debug;
-        const { heroStatus, mapKey, servicePrincipal, tasks } = this.initData;
-        this.data.set('servicePrincipal', servicePrincipal);
+        const { heroStatus, mapKey, tasks } = this.initData;
         this.data.set('tasks', tasks);
 
         const {
@@ -530,14 +529,12 @@ export default class GameScene extends Scene {
                             }
 
                             if (Input.Keyboard.JustDown(this.enterKey)) {
-                                const characterName = value;
-                                const servicePrincipal = this.data.values.servicePrincipal;
+                                const characterName = value;                               
                                 const tasks = this.data.values.tasks;
                                 
                                 const customEvent = new CustomEvent('new-dialog', {
                                     detail: {
-                                        characterName,
-                                        servicePrincipal,
+                                        characterName,                                     
                                         tasks,
                                         heroSprite: this.heroSprite,
                                     },
@@ -723,8 +720,7 @@ export default class GameScene extends Scene {
                                             canPush: this.heroSprite.canPush,
                                             haveSword: this.heroSprite.haveSword,
                                         },
-                                        mapKey: teleportToMapKey,
-                                        servicePrincipal,
+                                        mapKey: teleportToMapKey,                                       
                                         tasks
                                     });
                                 }
@@ -793,14 +789,12 @@ export default class GameScene extends Scene {
                 item.destroy();
             }
 
-            if (item.itemType === 'sword') {
-                const servicePrincipal = this.data.values.servicePrincipal;
+            if (item.itemType === 'sword') {                
                 const tasks = this.data.values.tasks;
 
                 const customEvent = new CustomEvent('new-dialog', {
                     detail: {
-                        characterName: item.itemType,
-                        servicePrincipal,
+                        characterName: item.itemType,                     
                         tasks,
                         heroSprite: this.heroSprite,
                     },
@@ -827,13 +821,11 @@ export default class GameScene extends Scene {
                 item.destroy();
             }
 
-            if (item.itemType === 'push') {
-                const servicePrincipal = this.data.values.servicePrincipal;
+            if (item.itemType === 'push') {                
                 const tasks = this.data.values.tasks;
                 const customEvent = new CustomEvent('new-dialog', {
                     detail: {
-                        characterName: item.itemType,
-                        servicePrincipal,
+                        characterName: item.itemType,                        
                         tasks,
                         heroSprite: this.heroSprite,
                     },
@@ -1216,14 +1208,11 @@ export default class GameScene extends Scene {
                     return;
                 }
 
-                const characterName = npc.texture.key;
-
-                const servicePrincipal = this.data.values.servicePrincipal;
+                const characterName = npc.texture.key;                
                 const tasks = this.data.values.tasks;
                 const customEvent = new CustomEvent('new-dialog', {
                     detail: {
-                        characterName,
-                        servicePrincipal,
+                        characterName,                     
                         tasks,
                         heroSprite: this.heroSprite,
                     },

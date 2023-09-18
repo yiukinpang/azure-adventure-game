@@ -10,7 +10,10 @@ import { ResourceGroup } from ".././.gen/providers/azurerm/resource-group";
 
 export interface StaticSiteConstructProps {  
   gameTaskFunctionUrl: string;
-  graderFunction: string;
+  graderFunctionUrl: string;
+  getApikeyUrl: string;
+  course: string;
+  storageAccountConnectionString: string;
   resourceGroup: ResourceGroup;
 }
 
@@ -44,7 +47,8 @@ export class StaticSiteConstruct extends Construct {
           "APPINSIGHTS_INSTRUMENTATIONKEY": `${applicationInsights.instrumentationKey}`,
           "APPLICATIONINSIGHTS_CONNECTION_STRING": `${applicationInsights.connectionString}`,    
           "gameTaskFunctionUrl": `${props.gameTaskFunctionUrl}`,
-          "graderFunction": `${props.graderFunction}`,       
+          "graderFunctionUrl": `${props.graderFunctionUrl}`,
+          "storageAccountConnectionString": `${props.storageAccountConnectionString}`,
         },
         "kind": "appsettings"
       })}`
