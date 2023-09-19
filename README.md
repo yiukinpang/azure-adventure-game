@@ -12,14 +12,7 @@ az ad sp create-for-rbac --role="Reader" --scopes="/subscriptions/<Your Subscrip
 ```
 
 
-## Setup
-```
-git clone https://github.com/wongcyrus/azure-adventure-game
-cd azure-adventure-game
-npm i
-```
-
-## For Codespaces
+## Setup with Coddespaces
 Install nvm and use node 16 https://github.com/nvm-sh/nvm
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
@@ -29,55 +22,60 @@ Close terminal, and use a new terminal
 nvm install 16
 nvm use 16
 npm i 
+npm install -g @azure/static-web-apps-cli
+npm i -g azure-functions-core-tools@4 --unsafe-perm true
 ```
 
 
-## Run test server
-```
-npm run start
-```
-
-```
-swa start build --api-location api
-```
-
-## Build the production code
+## Run local test server
+Reference https://learn.microsoft.com/en-us/azure/static-web-apps/local-development
 ```
 npm run build
+cd api && npm i
+cd ..
+swa start build --api-location api
 ```
+You can skip build command if you are just modifed the managed function.
+
 
 And, you can deploy the reactjs website to Azure Blob Storage Static Website or use Azure Static Web Apps
 
 ## Deploy with Azure Static Web Apps
 
-https://docs.microsoft.com/en-us/azure/static-web-apps/get-started-cli?tabs=react 
+The Codespace includes Terraform and this project constain a CDK-TF project for deployment.
+Rename .env.template to ```.env```.
+```
+GITHUB_TOKEN=<GitHub Token (classic) with repo and delete_repo permission for Terraform.>
+COURSE=<Your course partition key>
+GAME_TASK_FUNCTION_URL=<Azure Game Task Function Url with function key.>
+GRADER_FUNCTION_URL=<Azure Grader Function Url with function key.>
+GET_API_KEY_FUNCTION_URL=<Azure Function Url with function key to get student's service principal.>
+```
+For local development, Rename ```local.settings.template``` to local.settings.json.
+And update it as ```.env```
+```
+{
+    "IsEncrypted": false,
+    "Values": {
+      "AzureWebJobsStorage": "",
+      "FUNCTIONS_WORKER_RUNTIME": "node",
+      "course":"devops",
+      "getApikeyUrl":"https://xxx.azurewebsites.net/api/GetApiKeyFunction?code=",
+      "graderFunctionUrl":"https://xxx.azurewebsites.net/api/AzureGraderFunction?code=",
+      "gameTaskFunctionUrl":"https://xxx.azurewebsites.net/api/GameTaskFunction?code=",
+      "storageAccountConnectionString": ""
+    }
+  }
+```
 
+Login your Azure and set the default subscription.
 ```
 az login
-
-az group create \
-  --name azure-adventure-game-group \
-  --location "eastasia"
-  
-GITHUB_USER_NAME=<YOUR_GITHUB_USER_NAME>
-  
-az staticwebapp create \
-    --name azure-adventure-game \
-    --resource-group azure-adventure-game-group \
-    --source https://github.com/$GITHUB_USER_NAME/azure-adventure-game \
-    --location "eastasia" \
-    --branch main \
-    --app-location "/"  \
-    --output-location "build"  \
-    --login-with-github
-
-az staticwebapp show \
-  --name azure-adventure-game \
-  --query "repositoryUrl"
-
-az staticwebapp show \
-  --name azure-adventure-game \
-  --query "defaultHostname"
+az account set -s <id>
+```
+Run CDK-TF
+```
+./deploy.sh
 ```
 
 

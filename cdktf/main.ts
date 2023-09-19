@@ -34,7 +34,7 @@ class AzureAdventureGameStack extends TerraformStack {
     });
 
     const repository = "azure-adventure-game";
-    let uniquePrefix = "ive2023";
+    let uniquePrefix = "devops2324";
     const region = "eastasia";
 
 
