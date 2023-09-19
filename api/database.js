@@ -42,7 +42,8 @@ const saveMark = async (email, task, mark) => {
         const m = await marksTableClient.getEntity(email, task);
         // update mark
         m.mark = mark;
-        m.date = new Date();
+        m.lastTrial = new Date();
+        m.trialCourt += 1;
         if(mark !== 0 && !m.passAt){
             m.passAt = now;
         }
@@ -57,7 +58,8 @@ const saveMark = async (email, task, mark) => {
         rowKey: task,
         mark: mark,
         firstTrial : now,
-        date: now,
+        trialCourt: 1,
+        lastTrial: now,
     };
     if(mark !== 0){
         data.passAt = now;

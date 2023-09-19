@@ -31,6 +31,8 @@ npm i -g azure-functions-core-tools@4 --unsafe-perm true
 Reference https://learn.microsoft.com/en-us/azure/static-web-apps/local-development
 ```
 npm run build
+cd api && npm i
+cd ..
 swa start build --api-location api
 ```
 You can skip build command if you are just modifed the managed function.
@@ -41,7 +43,7 @@ And, you can deploy the reactjs website to Azure Blob Storage Static Website or 
 ## Deploy with Azure Static Web Apps
 
 The Codespace includes Terraform and this project constain a CDK-TF project for deployment.
-Rename .env.template to .env.
+Rename .env.template to ```.env```.
 ```
 GITHUB_TOKEN=<GitHub Token (classic) with repo and delete_repo permission for Terraform.>
 COURSE=<Your course partition key>
@@ -49,6 +51,23 @@ GAME_TASK_FUNCTION_URL=<Azure Game Task Function Url with function key.>
 GRADER_FUNCTION_URL=<Azure Grader Function Url with function key.>
 GET_API_KEY_FUNCTION_URL=<Azure Function Url with function key to get student's service principal.>
 ```
+For local development, Rename ```local.settings.template``` to local.settings.json.
+And update it as ```.env```
+```
+{
+    "IsEncrypted": false,
+    "Values": {
+      "AzureWebJobsStorage": "",
+      "FUNCTIONS_WORKER_RUNTIME": "node",
+      "course":"devops",
+      "getApikeyUrl":"https://xxx.azurewebsites.net/api/GetApiKeyFunction?code=",
+      "graderFunctionUrl":"https://xxx.azurewebsites.net/api/AzureGraderFunction?code=",
+      "gameTaskFunctionUrl":"https://xxx.azurewebsites.net/api/GameTaskFunction?code=",
+      "storageAccountConnectionString": ""
+    }
+  }
+```
+
 Login your Azure and set the default subscription.
 ```
 az login
