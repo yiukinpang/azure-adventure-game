@@ -69,8 +69,9 @@ And update it as ```.env```
 
 Login your Azure and set the default subscription.
 ```
-az login
-az account set -s <id>
+az login --use-device-code
+az account set -s <subacription id>
+az account show
 ```
 Run CDK-TF
 ```
