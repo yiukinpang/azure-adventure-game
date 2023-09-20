@@ -1,20 +1,16 @@
-const setJson = (context, body) => {
-    context.res = {
-        headers: { 'Content-Type': 'application/json' },
-        body
-    };
-}
+const setJson = ({ res }, body) => {
+    res.headers = { 'Content-Type': 'application/json' };
+    res.body = body;
+};
 
-const setErrorJson = (context, body, statusCode) => {
+const setErrorJson = ({ res }, body, statusCode = 401) => {
     if (typeof body === 'string') {
         body = { error: body };
     }
-    context.res = {
-        status: statusCode ?? 401,
-        headers: { 'Content-Type': 'application/json' },
-        body
-    };
-}
+    res.status = statusCode;
+    res.headers = { 'Content-Type': 'application/json' };
+    res.body = body;
+};
 
 module.exports = {
     setJson,
