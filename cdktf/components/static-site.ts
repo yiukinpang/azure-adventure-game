@@ -1,12 +1,12 @@
-import { Construct } from "constructs";
+import { Construct } from 'constructs';
 
-import { ApplicationInsights } from ".././.gen/providers/azurerm/application-insights";
-import { StaticSite } from ".././.gen/providers/azurerm/static-site";
-import { ResourceAction } from "../.gen/providers/azapi/resource-action";
-import { Fn } from "cdktf";
-import { Application } from ".././.gen/providers/azuread/application";
-import { ApplicationPassword } from ".././.gen/providers/azuread/application-password";
-import { ResourceGroup } from ".././.gen/providers/azurerm/resource-group";
+import { ApplicationInsights } from '../.gen/providers/azurerm/application-insights';
+import { StaticSite } from '../.gen/providers/azurerm/static-site';
+import { ResourceAction } from '../.gen/providers/azapi/resource-action';
+import { Fn } from 'cdktf';
+import { Application } from '../.gen/providers/azuread/application';
+import { ApplicationPassword } from '../.gen/providers/azuread/application-password';
+import { ResourceGroup } from '../.gen/providers/azurerm/resource-group';
 
 export interface StaticSiteConstructProps {
   prefix: string;
@@ -23,56 +23,56 @@ export class StaticSiteConstruct extends Construct {
   public readonly application: Application;
   public readonly applicationPassword: ApplicationPassword;
 
-  constructor(scope: Construct, id: string, props: StaticSiteConstructProps) {
+  constructor(scope: Construct, id: string, { prefix, gameTaskFunctionUrl, graderFunctionUrl, getApikeyUrl, course, storageAccountConnectionString, resourceGroup }: StaticSiteConstructProps) {
     super(scope, id);
-    this.staticSite = new StaticSite(this, "StaticSite", {
-      location: props.resourceGroup.location,
-      name: props.prefix + "StaticSite",
-      resourceGroupName: props.resourceGroup.name,
-      skuTier: "Free",
+
+    this.staticSite = new StaticSite(this, 'StaticSite', {
+      location: resourceGroup.location,
+      name: `${prefix}StaticSite`,
+      resourceGroupName: resourceGroup.name,
+      skuTier: 'Free',
     });
 
-    const applicationInsights = new ApplicationInsights(this, "ApplicationInsights", {
-      name: props.prefix +"ApplicationInsights",
-      resourceGroupName: props.resourceGroup.name,
-      location: props.resourceGroup.location,
-      applicationType: "web",
-    })
+    const applicationInsights = new ApplicationInsights(this, 'ApplicationInsights', {
+      name: `${prefix}ApplicationInsights`,
+      resourceGroupName: resourceGroup.name,
+      location: resourceGroup.location,
+      applicationType: 'web',
+    });
 
-    new ResourceAction(this, "StaticSiteAction", {
-      type: "Microsoft.Web/staticSites/config@2022-03-01",
-      resourceId: this.staticSite.id + "/config/appsettings",
-      method: "PUT",
+    new ResourceAction(this, 'StaticSiteAction', {
+      type: 'Microsoft.Web/staticSites/config@2022-03-01',
+      resourceId: `${this.staticSite.id}/config/appsettings`,
+      method: 'PUT',
       body: `${Fn.jsonencode({
-        "properties": {
-          "APPINSIGHTS_INSTRUMENTATIONKEY": `${applicationInsights.instrumentationKey}`,
-          "APPLICATIONINSIGHTS_CONNECTION_STRING": `${applicationInsights.connectionString}`,
-          "course": `${props.course}`,
-          "getApikeyUrl": `${props.getApikeyUrl}`,
-          "gameTaskFunctionUrl": `${props.gameTaskFunctionUrl}`,
-          "graderFunctionUrl": `${props.graderFunctionUrl}`,
-          "storageAccountConnectionString": `${props.storageAccountConnectionString}`,
+        properties: {
+          APPINSIGHTS_INSTRUMENTATIONKEY: `${applicationInsights.instrumentationKey}`,
+          APPLICATIONINSIGHTS_CONNECTION_STRING: `${applicationInsights.connectionString}`,
+          course,
+          getApikeyUrl,
+          gameTaskFunctionUrl,
+          graderFunctionUrl,
+          storageAccountConnectionString,
         },
-        "kind": "appsettings"
-      })}`
+        kind: 'appsettings',
+      })}`,
     });
 
-
-    this.application = new Application(this, "Application", {
-      displayName: props.prefix +"Application",
-      signInAudience: "AzureADMyOrg",
+    this.application = new Application(this, 'Application', {
+      displayName: `${prefix}Application`,
+      signInAudience: 'AzureADMyOrg',
       web: {
-        redirectUris: ["https://" + this.staticSite.defaultHostName + "/.auth/login/aadb2c/callback"],
+        redirectUris: [`https://${this.staticSite.defaultHostName}/.auth/login/aadb2c/callback`],
         implicitGrant: {
           accessTokenIssuanceEnabled: true,
-          idTokenIssuanceEnabled: true
-        }
-      }
+          idTokenIssuanceEnabled: true,
+        },
+      },
     });
 
-    this.applicationPassword = new ApplicationPassword(this, "ApplicationPwd", {
+    this.applicationPassword = new ApplicationPassword(this, 'ApplicationPwd', {
       applicationObjectId: this.application.objectId,
-      displayName: "Application cred",
+      displayName: 'Application cred',
     });
   }
 }
