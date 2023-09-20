@@ -39,6 +39,12 @@ You can skip build command if you are just modifed the managed function.
 
 And, you can deploy the reactjs website to Azure Blob Storage Static Website or use Azure Static Web Apps
 
+## Prerequisite
+You have to deploy 
+1. [AzureAutomaticGradingEngine_Assignments](https://github.com/microsoft/AzureAutomaticGradingEngine_Assignments)
+2. [AzureAutomaticGradingEngine](https://github.com/microsoft/AzureAutomaticGradingEngine)
+And, record down Azure Function Urls and function key.
+
 ## Deploy with Azure Static Web Apps
 
 The Codespace includes Terraform and this project constain a CDK-TF project for deployment.
@@ -60,7 +66,7 @@ And update it as ```.env```
       "FUNCTIONS_WORKER_RUNTIME": "node",
       "course":"devops",
       "getApikeyUrl":"https://xxx.azurewebsites.net/api/GetApiKeyFunction?code=",
-      "graderFunctionUrl":"https://xxx.azurewebsites.net/api/AzureGraderFunction?code=",
+      "graderFunctionUrl":"https://xxx.azurewebsites.net/api/AzureGraderFunction",
       "gameTaskFunctionUrl":"https://xxx.azurewebsites.net/api/GameTaskFunction?code=",
       "storageAccountConnectionString": ""
     }

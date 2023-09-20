@@ -51,7 +51,7 @@ class AzureAdventureGameStack extends TerraformStack {
       resourceGroup,
       course: process.env.COURSE!,
       gameTaskFunctionUrl: process.env.GAME_TASK_FUNCTION_URL!,
-      graderFunctionUrl: process.env.GRADER_FUNCTION!,
+      graderFunctionUrl: process.env.GRADER_FUNCTION_URL!,
       getApikeyUrl: process.env.GET_API_KEY_FUNCTION_URL!,
       storageAccountConnectionString: storageAccountConstruct.storageAccount.primaryConnectionString,
     });

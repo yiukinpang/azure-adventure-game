@@ -12,7 +12,7 @@ export interface GitHubProps {
 }
 
 export class GitHubConstruct extends Construct {
-  constructor(scope: Construct, id: string, { apiToken, repository, clientID, clientSecret, githubProvider }: GitHubProps) {
+  constructor(scope: Construct, id: string, { apiToken, repository, clientID, clientSecret }: GitHubProps) {
     super(scope, id);
 
     const repo = new Repository(this, 'Repository', {
